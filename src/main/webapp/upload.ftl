@@ -7,7 +7,7 @@
 </#macro>
 
 <#macro content>
-    <P>Upload file</P>
+    <p>Upload file</p>
     <form action="upload" method="post" enctype="multipart/form-data">
         <input type="file" name="file">
         <br>
