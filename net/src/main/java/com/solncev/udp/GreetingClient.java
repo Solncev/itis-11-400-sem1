@@ -19,6 +19,7 @@ public class GreetingClient implements AutoCloseable {
     public GreetingClient() {
         try {
             this.socket = new DatagramSocket();
+            this.socket.setSoTimeout(5000);
             this.address = InetAddress.getLocalHost();
         } catch (SocketException | UnknownHostException e) {
             throw new RuntimeException(e);

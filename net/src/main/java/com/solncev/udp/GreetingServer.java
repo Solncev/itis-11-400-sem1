@@ -16,7 +16,8 @@ public class GreetingServer extends Thread implements AutoCloseable {
 
     public GreetingServer() {
         try {
-            socket = new DatagramSocket(PORT);
+            this.socket = new DatagramSocket(PORT);
+            this.socket.setSoTimeout(5000);
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
@@ -24,33 +25,40 @@ public class GreetingServer extends Thread implements AutoCloseable {
 
     @Override
     public void run() {
-        while (alive) {
-            try {
-                DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-                socket.receive(packet);
+        try {
+            while (alive) {
+                try {
+                    DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
+                    socket.receive(packet);
 
-                String message = new String(packet.getData(), 0, packet.getLength());
-                InetAddress address = packet.getAddress();
-                int port = packet.getPort();
+                    String message = new String(packet.getData(), 0, packet.getLength());
+                    InetAddress address = packet.getAddress();
+                    int port = packet.getPort();
 
-                // some logic here
+                    // some logic here
 
-                byte[] data = message.getBytes(StandardCharsets.UTF_8);
-                packet = new DatagramPacket(data, data.length, address, port);
-                socket.send(packet);
+                    byte[] data = message.getBytes(StandardCharsets.UTF_8);
+                    packet = new DatagramPacket(data, data.length, address, port);
+                    socket.send(packet);
 
-                if ("bye".equalsIgnoreCase(message.trim())){
-                    alive = false;
+                    if ("bye".equalsIgnoreCase(message.trim())) {
+                        alive = false;
+                    }
+                } catch (IOException e) {
+                    if (!alive && socket.isClosed()) {
+                        break;
+                    }
+                    throw new RuntimeException(e);
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
             }
+        } finally {
+            close();
         }
-        close();
     }
 
     @Override
     public void close() {
+        alive = false;
         socket.close();
     }
 }
