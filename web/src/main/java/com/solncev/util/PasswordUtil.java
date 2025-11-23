@@ -11,7 +11,7 @@ public final class PasswordUtil {
     private PasswordUtil() {
     }
 
-    public static String encrypt(String password){
+    public static String encrypt(String password) {
         MessageDigest md;
 
         try {

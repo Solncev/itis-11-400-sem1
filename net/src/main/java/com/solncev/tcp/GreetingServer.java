@@ -14,6 +14,11 @@ public class GreetingServer {
     private PrintWriter out;
     private BufferedReader in;
 
+    public static void main(String[] args) {
+        GreetingServer server = new GreetingServer();
+        server.start(5555);
+    }
+
     public void start(int port) {
         try {
             serverSocket = new ServerSocket(port);
@@ -45,10 +50,5 @@ public class GreetingServer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        GreetingServer server = new GreetingServer();
-        server.start(5555);
     }
 }

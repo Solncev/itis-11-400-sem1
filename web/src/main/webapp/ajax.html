@@ -12,7 +12,7 @@
         $(document).on("click", "#ajax-button", function () {
             console.log("Debug");
             // alert("Alert");
-            
+
             $.get("/ajax/hello", function (response) {
                 $("#ajax-response").text(response)
             })
@@ -25,7 +25,7 @@
 </div>
 
 <form>
-    <input type="button" class="" id="ajax-button" value="Get message">
+    <input class="" id="ajax-button" type="button" value="Get message">
 </form>
 </body>
 
