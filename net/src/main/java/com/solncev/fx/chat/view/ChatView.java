@@ -23,7 +23,7 @@ public class ChatView extends BaseView {
 
     public void append(String message) {
         if (message != null) {
-            conversation.appendText(message);
+            conversation.appendText(message + System.lineSeparator());
         }
     }
 
@@ -50,7 +50,7 @@ public class ChatView extends BaseView {
                 String message = input.getText();
                 String username = getChatApplication().userConfig.username();
                 getChatApplication().getChatClient().send(username + ": " + message);
-                conversation.appendText("you" + ": " + message);
+                conversation.appendText("you" + ": " + message + System.lineSeparator());
                 input.clear();
                 event.consume();
             }

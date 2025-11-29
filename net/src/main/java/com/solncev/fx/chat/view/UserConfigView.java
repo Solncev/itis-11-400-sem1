@@ -53,8 +53,8 @@ public class UserConfigView extends BaseView {
         });
 
         box.getChildren().addAll(
-                usernameLabel, hostLabel, portLabel,
-                username, host, port, start
+                usernameLabel, username, hostLabel,
+                host, portLabel, port, start
         );
         root.getChildren().addAll(box);
     }
